@@ -7,5 +7,11 @@ End Date: TBD
 
 Beginner Level
 
-Day 1.
+Day 1
 Project: Band Name Generator
+
+Day 2
+Project: Bill and Tip Calculator
+
+Day 3
+Project: Treasure Adventure

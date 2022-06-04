@@ -1,101 +1,54 @@
 import random
+from hangman_art import logo, stages
+from hangman_words import word_list
 
-stages = ['''
-  +---+
-  |   |
-  O   |
- /|\  |
- / \  |
-      |
-=========
-''', '''
-  +---+
-  |   |
-  O   |
- /|\  |
- /    |
-      |
-=========
-''', '''
-  +---+
-  |   |
-  O   |
- /|\  |
-      |
-      |
-=========
-''', '''
-  +---+
-  |   |
-  O   |
- /|   |
-      |
-      |
-=========''', '''
-  +---+
-  |   |
-  O   |
-  |   |
-      |
-      |
-=========
-''', '''
-  +---+
-  |   |
-  O   |
-      |
-      |
-      |
-=========
-''', '''
-  +---+
-  |   |
-      |
-      |
-      |
-      |
-=========
-''']
-
-
-
-
-word_list = ["strawberry", "friendship", "everything", "appreciate", "motivation", "detonation", "credential", "recolonize", "disability", "expiration"]
 chosen_word = random.choice(word_list)
-
 display = []
+guesses = []
 turns = 6
 
 for letter in chosen_word:
     display.append("_")
     
-end_of_game = False
-
-while not end_of_game:
+while True:
+    print(logo)
     print(stages[turns])
-    print(" ".join(display), "\n")
-    correct_guess = False
-    guess = input("Guess a letter: ").lower()
-    for index, letter in enumerate(chosen_word):
-        if guess == letter:
-            correct_guess = True
-            display[index] = letter
+    print(f"Letters already guessed: {', '.join(guesses)}")
+    print(f"{turns} chances remaining.")
 
-    if not correct_guess:
-        turns -= 1
-        print(f"Wrong guess. {turns} guesses left.")
-    else:
-        print("Good guess!")
-        
+    correct_guess = False
+    
     if turns == 0:
         print(stages[turns])
         print("You lose.")
         print(f"\"{chosen_word}\" is the answer.")
-        end_of_game = True
+        break
     elif "_" not in display:
-        print("\n", " ".join(display))
         print("You won!")
-        end_of_game = True
+        break
+        
+    print(" ".join(display), "\n")    
+    guess = input("Guess a letter: ").lower()
+    
+    if guess in guesses:
+        print(f"Already picked \"{guess}\", please choose another letter.")
+        continue
+    else:
+        guesses.append(guess)
+
+        if guess in chosen_word:
+            for index, letter in enumerate(chosen_word):
+                if guess == letter:
+                    correct_guess = True
+                    display[index] = letter
+        else:
+            turns -= 1   
+            
+
+
+
+        
+
     
     
 

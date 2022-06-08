@@ -1,11 +1,5 @@
 from art import logo
 
-import os
-
-def cls():
-    os.system('cls' if os.name=='nt' else 'clear')
-
-
 
 def add(n1, n2):
     return n1 + n2
@@ -23,32 +17,32 @@ def divide(n1, n2):
         return 0
 
 
-while True: 
+operators = {
+    "+": add,
+    "-": subtract,
+    "*": multiply,
+    "/": divide
+}
+
+def calculator():
     print(logo)
-    num1 = int(input("What's the first number?: "))
+    num1 = float(input("What's the first number?: "))
 
     while True:
         operator = input("+\n-\n*\n/\nPick an operation: ")
-        num2 = int(input("What's the next number? "))
+        num2 = float(input("What's the next number? "))
+        operation = operators[operator]
+        answer = operation(num1, num2)
+        print(f"{num1} {operator} {num2} = {answer}")
 
-        if operator == '+':  
-            result = add(num1, num2)
-        elif operator == '-':
-            result = subtract(num1, num2)
-        elif operator == '*':
-            result = multiply(num1, num2)
-        elif operator == '/':
-            result = divide(num1, num2)
-            
-        print(f"{num1} {operator} {num2} = {result}")
-
-        play_again = input(f"Type 'y' to continue calculating with {result}, or type 'n' to start a new calculation: ")
+        play_again = input(f"Type 'y' to continue calculating with {answer}, or type 'n' to start a new calculation: ")
 
         if play_again == 'y':
-            num1 = result
+            num1 = answer
         elif play_again == 'n':
+            calculator()
             break
 
-    
+calculator()
     
 

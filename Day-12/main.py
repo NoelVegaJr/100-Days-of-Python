@@ -1,30 +1,51 @@
 import atexit
 import random
-
-print("Welcome to the Number Guessing Game!")
-print("I'm thinking of a number between 1 and 100.")
-secret_number = random.randrange(1, 101)
-difficulty = {'easy': 10, 'hard': 5}
-
-chosen_difficulty = input("Choose a difficulty. Type 'easy' or 'hard': ")
-attempts = difficulty[chosen_difficulty]
+from art import logo
 
 
-while True:
-    
-    print(f"You have {attempts} attempts remaining to guess the number.")
-    guess = int(input("Make a guess "))
-    
-    if guess > secret_number:
-        print("Too high.")
-    elif guess < secret_number:
-        print("Too low")
+def new_guess():
+    return int(input("Make a guess: "))
+
+
+def check_guess(guess, answer, turns):
+    if guess == answer:
+        print("You guessed right, you win!")
     else:
-        print(f"You found the secret number!")
-        break
+        if guess > answer:
+            print("Too high.")
+        else:
+            print("Too low")
+
+        return turns - 1
+
+
+def set_difficulty():
+    diff = input("Choose a difficulty. Type 'easy' or 'hard': ")
+    if diff == 'easy':
+        return 10
+    else:
+        return 5
     
-    attempts -= 1
+
+def number_guessing_game():
+    print(logo)
+    print("Welcome to the Number Guessing Game!")
+    print("I'm thinking of a number between 1 and 100.")
+    secret = random.randrange(1, 101)
+    turns = set_difficulty() 
+
+    while True:
+        
+        print(f"You have {turns} attempts remaining to guess the number.")
+        guess = new_guess()
+        turns = check_guess(guess, secret, turns)
+        
+        if turns == 0:
+            print("You've run out of guesses, you lose :(")
+            return
+        elif guess != secret:
+            print("Guess again")
+        else:
+            return
     
-    if attempts == 0:
-        print(f"{secret_number} is the secret number.\nYou lose")
-        break
+number_guessing_game()
